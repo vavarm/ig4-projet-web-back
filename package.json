@@ -2,9 +2,9 @@
   "name": "ig4-projet-web-back",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "RACAUD--MINUZZI Valentin, THEZENAS Kylian",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GNU GPLv3",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
