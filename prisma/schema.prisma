@@ -36,7 +36,7 @@ type Time {
 }
 
 model Benevole {
-  id               Bytes            @id @default(auto()) @map("_id") @db.ObjectId
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
   nom              String
   prenom           String
   email            String           @unique
@@ -46,98 +46,98 @@ model Benevole {
   ville            String
   telephone        String
   associations     Association[]    @relation(fields: [associationIds], references: [id])
-  associationIds   Bytes[]          @db.ObjectId
+  associationIds   String[]         @db.ObjectId
   taille_tshirt    EnumTailleTShirt
   vegetarien       Boolean
   hebergement      EnumHebergement?
   role             EnumRole
   compteValide     Boolean
-  PosteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
-  posteReferenceId Bytes?           @db.ObjectId
-  PlanningPoste    PlanningPoste[]
-  PlanningEspace   PlanningEspace[]
+  posteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
+  posteReferenceId String?          @db.ObjectId
+  planningsPostes  PlanningPoste[]
+  planningsEspaces PlanningEspace[]
 }
 
 model Association {
-  id          Bytes      @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   nom         String
   benevoles   Benevole[] @relation(fields: [benevoleIds], references: [id])
-  benevoleIds Bytes[]    @db.ObjectId
+  benevoleIds String[]   @db.ObjectId
   mail        String
 }
 
 model Poste {
-  id            Bytes           @id @default(auto()) @map("_id") @db.ObjectId
-  nom           String
-  nbPlaces      Int
-  referents     Benevole[]
-  Message       Message[]
-  espaces       Espace[]
-  PlanningPoste PlanningPoste[]
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  nom             String
+  nbPlaces        Int
+  referents       Benevole[]
+  message         Message[]
+  espaces         Espace[]
+  planningsPostes PlanningPoste[]
 }
 
 model Jeu {
-  id          Bytes   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   titre       String
   editeur     String
   nbJoueurs   String
   recu        Boolean
   lienSiteWeb String
-  Espace      Espace  @relation(fields: [espaceId], references: [id])
-  espaceId    Bytes   @db.ObjectId
+  espace      Espace  @relation(fields: [espaceId], references: [id])
+  espaceId    String  @db.ObjectId
 }
 
 model Espace {
-  id             Bytes            @id @default(auto()) @map("_id") @db.ObjectId
-  nom            String
-  jeux           Jeu[]
-  nbPlaces       Int
-  Poste          Poste?           @relation(fields: [posteId], references: [id])
-  posteId        Bytes?           @db.ObjectId
-  PlanningEspace PlanningEspace[]
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  nom              String
+  jeux             Jeu[]
+  nbPlaces         Int
+  poste            Poste?           @relation(fields: [posteId], references: [id])
+  posteId          String?          @db.ObjectId
+  planningsEspaces PlanningEspace[]
 }
 
 model Message {
-  id              Bytes    @id @default(auto()) @map("_id") @db.ObjectId
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
   poste           Poste    @relation(fields: [posteId], references: [id])
-  posteId         Bytes    @db.ObjectId
+  posteId         String   @db.ObjectId
   message         String
   datePublication DateTime @default(now())
 }
 
 model Jour {
-  id             Bytes            @id @default(auto()) @map("_id") @db.ObjectId
-  label          String
-  CreneauHoraire CreneauHoraire[]
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  label            String
+  creneauxHoraires CreneauHoraire[]
 }
 
 model CreneauHoraire {
-  id             Bytes            @id @default(auto()) @map("_id") @db.ObjectId
-  horaireDebut   Time
-  horaireFin     Time
-  jour           Jour             @relation(fields: [jourId], references: [id])
-  jourId         Bytes            @db.ObjectId
-  PlanningPoste  PlanningPoste[]
-  PlanningEspace PlanningEspace[]
+  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  horaireDebut     Time
+  horaireFin       Time
+  jour             Jour             @relation(fields: [jourId], references: [id])
+  jourId           String           @db.ObjectId
+  planningsPostes  PlanningPoste[]
+  planningsEspaces PlanningEspace[]
 }
 
 model PlanningPoste {
-  id               Bytes          @id @default(auto()) @map("_id") @db.ObjectId
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
   poste            Poste          @relation(fields: [posteId], references: [id])
-  posteId          Bytes          @db.ObjectId
+  posteId          String         @db.ObjectId
   benevole         Benevole       @relation(fields: [benevoleId], references: [id])
-  benevoleId       Bytes          @db.ObjectId
+  benevoleId       String         @db.ObjectId
   creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
-  creneauHoraireId Bytes          @db.ObjectId
+  creneauHoraireId String         @db.ObjectId
   flexible         Boolean
 }
 
 model PlanningEspace {
-  id               Bytes          @id @default(auto()) @map("_id") @db.ObjectId
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
   espace           Espace?        @relation(fields: [espaceId], references: [id])
-  espaceId         Bytes?         @db.ObjectId
+  espaceId         String?        @db.ObjectId
   benevole         Benevole       @relation(fields: [benevoleId], references: [id])
-  benevoleId       Bytes          @db.ObjectId
+  benevoleId       String         @db.ObjectId
   creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
-  creneauHoraireId Bytes          @db.ObjectId
+  creneauHoraireId String         @db.ObjectId
 }
