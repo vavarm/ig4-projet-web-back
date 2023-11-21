@@ -1,0 +1,1 @@
+reload prisma schema: npx prisma generate

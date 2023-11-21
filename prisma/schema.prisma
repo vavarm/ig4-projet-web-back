@@ -51,7 +51,8 @@ model Benevole {
   vegetarien       Boolean
   hebergement      EnumHebergement?
   role             EnumRole
-  compteValide     Boolean
+  compteValide     Boolean          @default(false)
+  present          Boolean          @default(false)
   posteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
   posteReferenceId String?          @db.ObjectId
   planningsPostes  PlanningPoste[]
@@ -92,8 +93,8 @@ model Espace {
   nom              String
   jeux             Jeu[]
   nbPlaces         Int
-  poste            Poste?           @relation(fields: [posteId], references: [id])
-  posteId          String?          @db.ObjectId
+  poste            Poste            @relation(fields: [posteId], references: [id])
+  posteId          String           @db.ObjectId
   planningsEspaces PlanningEspace[]
 }
 
@@ -134,10 +135,11 @@ model PlanningPoste {
 
 model PlanningEspace {
   id               String         @id @default(auto()) @map("_id") @db.ObjectId
-  espace           Espace?        @relation(fields: [espaceId], references: [id])
-  espaceId         String?        @db.ObjectId
+  espace           Espace         @relation(fields: [espaceId], references: [id])
+  espaceId         String         @db.ObjectId
   benevole         Benevole       @relation(fields: [benevoleId], references: [id])
   benevoleId       String         @db.ObjectId
   creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
   creneauHoraireId String         @db.ObjectId
+  flexible         Boolean
 }

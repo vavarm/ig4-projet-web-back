@@ -1,34 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { BenevolesService } from './benevoles.service';
-import { CreateBenevoleDto } from './dto/create-benevole.dto';
-import { UpdateBenevoleDto } from './dto/update-benevole.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
+import { BenevolesService } from './benevoles.service'
+import { CreateBenevoleDto } from './dto/create-benevole.dto'
+import { UpdateBenevoleDto } from './dto/update-benevole.dto'
+import { BenevoleEntity } from './entities/benevole.entity'
 
 @Controller('benevoles')
 export class BenevolesController {
-  constructor(private readonly benevolesService: BenevolesService) {}
+  constructor(private readonly benevolesService: BenevolesService) { }
 
   @Post()
-  create(@Body() createBenevoleDto: CreateBenevoleDto) {
-    return this.benevolesService.create(createBenevoleDto);
+  async create(@Body() createBenevoleDto: CreateBenevoleDto) {
+    const benevole = await this.benevolesService.create(createBenevoleDto)
+    return new BenevoleEntity(benevole)
   }
 
   @Get()
-  findAll() {
-    return this.benevolesService.findAll();
+  async findAll() {
+    const benevoles = await this.benevolesService.findAll()
+    return benevoles.map((benevole) => new BenevoleEntity(benevole))
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.benevolesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const benevole = await this.benevolesService.findOne(id)
+    return new BenevoleEntity(benevole)
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBenevoleDto: UpdateBenevoleDto) {
-    return this.benevolesService.update(+id, updateBenevoleDto);
+  async update(@Param('id') id: string, @Body() updateBenevoleDto: UpdateBenevoleDto) {
+    const benevole = await this.benevolesService.update(id, updateBenevoleDto)
+    return new BenevoleEntity(benevole)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.benevolesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    const benevole = await this.benevolesService.remove(id)
+    return new BenevoleEntity(benevole)
   }
 }

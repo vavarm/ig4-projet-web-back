@@ -20,6 +20,7 @@ async function main() {
             hebergement: null,
             role: EnumRole.Benevole,
             compteValide: true,
+            present: false,
         },
     })
     console.log({ alice })

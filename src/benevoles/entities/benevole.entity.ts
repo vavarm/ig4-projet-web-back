@@ -6,7 +6,7 @@ export class BenevoleEntity implements Benevole {
         Object.assign(this, partial)
     }
 
-    id: Buffer
+    id: string
 
     nom: string
 
@@ -27,7 +27,7 @@ export class BenevoleEntity implements Benevole {
 
     // TODO association: AssociationEntity[]
     associations: Buffer[]
-    associationIds: Buffer[]
+    associationIds: string[]
 
     taille_tshirt: EnumTailleTShirt
 
@@ -39,9 +39,11 @@ export class BenevoleEntity implements Benevole {
 
     compteValide: boolean
 
+    present: boolean
+
     // TODO posteReference: PosteEntity
     posteReference: Buffer
-    posteReferenceId: Buffer
+    posteReferenceId: string
 
     // TODO planningsPostes: PlanningPosteEntity[]
     planningsPostes: Buffer[]

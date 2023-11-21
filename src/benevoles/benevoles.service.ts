@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBenevoleDto } from './dto/create-benevole.dto';
-import { UpdateBenevoleDto } from './dto/update-benevole.dto';
+import { Injectable } from '@nestjs/common'
+import { CreateBenevoleDto } from './dto/create-benevole.dto'
+import { UpdateBenevoleDto } from './dto/update-benevole.dto'
+import { PrismaService } from '../prisma/prisma.service'
 
 @Injectable()
 export class BenevolesService {
-  create(createBenevoleDto: CreateBenevoleDto) {
-    return 'This action adds a new benevole';
+
+  constructor(private readonly prisma: PrismaService) { }
+
+  async create(createBenevoleDto: CreateBenevoleDto) {
+    return this.prisma.benevole.create({
+      data: createBenevoleDto
+    })
   }
 
-  findAll() {
-    return `This action returns all benevoles`;
+  async findAll() {
+    return this.prisma.benevole.findMany()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} benevole`;
+  async findOne(id: string) {
+    return this.prisma.benevole.findUnique({
+      where: { id }
+    })
   }
 
-  update(id: number, updateBenevoleDto: UpdateBenevoleDto) {
-    return `This action updates a #${id} benevole`;
+  async update(id: string, updateBenevoleDto: UpdateBenevoleDto) {
+    return this.prisma.benevole.update({
+      where: { id },
+      data: updateBenevoleDto
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} benevole`;
+  async remove(id: string) {
+    return this.prisma.benevole.delete({
+      where: { id }
+    })
   }
 }

@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsString, MinLength, IsBoolean } from 'class-validator'
+import { IsArray, IsNotEmpty, IsString, MinLength, IsBoolean, IsEmail } from 'class-validator'
 import { EnumTailleTShirt, EnumHebergement, EnumRole } from '@prisma/client'
 
 export class CreateBenevoleDto {
@@ -12,6 +12,7 @@ export class CreateBenevoleDto {
 
     @IsNotEmpty()
     @IsString()
+    @IsEmail()
     email: string
 
     @IsNotEmpty()
@@ -46,4 +47,26 @@ export class CreateBenevoleDto {
 
     @IsBoolean()
     compteValide: boolean
+
+    @IsBoolean()
+    present: boolean
+
+    // TODO association: AssociationEntity[]
+    /*
+    associations: Buffer[]
+    @IsArray()
+    associationIds: string[]
+
+    // TODO posteReference: PosteEntity
+    posteReference: Buffer
+    posteReferenceId: string
+
+    // TODO planningsPostes: PlanningPosteEntity[]
+    @IsArray()
+    planningsPostes: Buffer[]
+
+    // TODO planningsEspaces: PlanningEspaceEntity[]
+    @IsArray()
+    planningsEspaces: Buffer[]
+    */
 }
