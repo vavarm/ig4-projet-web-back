@@ -1,12 +1,13 @@
-import { Benevole, EnumTailleTShirt, EnumHebergement, EnumRole } from '@prisma/client'
+import { Benevole, EnumTailleTShirt, EnumHebergement, EnumRole, Poste, PlanningEspace, PlanningPoste } from '@prisma/client'
 import { Exclude } from 'class-transformer'
+import { AssociationEntity } from 'src/associations/entities/association.entity'
 
 export class BenevoleEntity implements Benevole {
     constructor(partial: Partial<BenevoleEntity>) {
         Object.assign(this, partial)
     }
 
-    id: string
+    id: number
 
     nom: string
 
@@ -25,9 +26,7 @@ export class BenevoleEntity implements Benevole {
 
     telephone: string
 
-    // TODO association: AssociationEntity[]
-    associations: Buffer[]
-    associationIds: string[]
+    associations: AssociationEntity[]
 
     taille_tshirt: EnumTailleTShirt
 
@@ -41,13 +40,14 @@ export class BenevoleEntity implements Benevole {
 
     present: boolean
 
-    // TODO posteReference: PosteEntity
-    posteReference: Buffer
-    posteReferenceId: string
+    // TODO
+    posteReferenceId: number | null
+    posteReference: Poste | null
 
-    // TODO planningsPostes: PlanningPosteEntity[]
-    planningsPostes: Buffer[]
+    // TODO
+    planningsPostes: PlanningPoste[]
 
-    // TODO planningsEspaces: PlanningEspaceEntity[]
-    planningsEspaces: Buffer[]
+
+    // TODO
+    planningsEspaces: PlanningEspace[]
 }

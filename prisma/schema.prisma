@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,6 +22,7 @@ enum EnumTailleTShirt {
 enum EnumHebergement {
   PROPOSE
   RECHERCHE
+  AUCUN
 }
 
 enum EnumRole {
@@ -30,13 +31,8 @@ enum EnumRole {
   Benevole
 }
 
-type Time {
-  hours   Int
-  minutes Int
-}
-
 model Benevole {
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  id               Int              @id @default(autoincrement())
   nom              String
   prenom           String
   email            String           @unique
@@ -45,32 +41,29 @@ model Benevole {
   codePostal       String
   ville            String
   telephone        String
-  associations     Association[]    @relation(fields: [associationIds], references: [id])
-  associationIds   String[]         @db.ObjectId
+  associations     Association[]
   taille_tshirt    EnumTailleTShirt
   vegetarien       Boolean
-  hebergement      EnumHebergement?
+  hebergement      EnumHebergement
   role             EnumRole
   compteValide     Boolean          @default(false)
   present          Boolean          @default(false)
   posteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
-  posteReferenceId String?          @db.ObjectId
+  posteReferenceId Int?
   planningsPostes  PlanningPoste[]
   planningsEspaces PlanningEspace[]
 }
 
 model Association {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  nom         String
-  benevoles   Benevole[] @relation(fields: [benevoleIds], references: [id])
-  benevoleIds String[]   @db.ObjectId
-  mail        String
+  id        Int        @id @default(autoincrement())
+  nom       String     @unique
+  benevoles Benevole[]
+  email     String
 }
 
 model Poste {
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  id              Int             @id @default(autoincrement())
   nom             String
-  nbPlaces        Int
   referents       Benevole[]
   message         Message[]
   espaces         Espace[]
@@ -78,68 +71,72 @@ model Poste {
 }
 
 model Jeu {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          Int     @id @default(autoincrement())
   titre       String
   editeur     String
   nbJoueurs   String
   recu        Boolean
   lienSiteWeb String
   espace      Espace  @relation(fields: [espaceId], references: [id])
-  espaceId    String  @db.ObjectId
+  espaceId    Int
 }
 
 model Espace {
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  id               Int              @id @default(autoincrement())
   nom              String
   jeux             Jeu[]
   nbPlaces         Int
   poste            Poste            @relation(fields: [posteId], references: [id])
-  posteId          String           @db.ObjectId
+  posteId          Int
   planningsEspaces PlanningEspace[]
 }
 
 model Message {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  id              Int      @id @default(autoincrement())
   poste           Poste    @relation(fields: [posteId], references: [id])
-  posteId         String   @db.ObjectId
+  posteId         Int
   message         String
   datePublication DateTime @default(now())
 }
 
 model Jour {
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
+  id               Int              @id @default(autoincrement())
   label            String
   creneauxHoraires CreneauHoraire[]
 }
 
 model CreneauHoraire {
-  id               String           @id @default(auto()) @map("_id") @db.ObjectId
-  horaireDebut     Time
-  horaireFin       Time
-  jour             Jour             @relation(fields: [jourId], references: [id])
-  jourId           String           @db.ObjectId
-  planningsPostes  PlanningPoste[]
-  planningsEspaces PlanningEspace[]
+  id                  Int              @id @default(autoincrement())
+  horaireDebutHeures  Int
+  horaireDebutMinutes Int
+  horaireFinHeures    Int
+  horaireFinMinutes   Int
+  jour                Jour             @relation(fields: [jourId], references: [id])
+  jourId              Int
+  planningsPostes     PlanningPoste[]
+  planningsEspaces    PlanningEspace[]
 }
 
 model PlanningPoste {
-  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  id               Int            @id @default(autoincrement())
   poste            Poste          @relation(fields: [posteId], references: [id])
-  posteId          String         @db.ObjectId
+  posteId          Int
   benevole         Benevole       @relation(fields: [benevoleId], references: [id])
-  benevoleId       String         @db.ObjectId
+  benevoleId       Int
   creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
-  creneauHoraireId String         @db.ObjectId
+  creneauHoraireId Int
   flexible         Boolean
 }
 
 model PlanningEspace {
-  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  id               Int            @id @default(autoincrement())
   espace           Espace         @relation(fields: [espaceId], references: [id])
-  espaceId         String         @db.ObjectId
+  espaceId         Int
   benevole         Benevole       @relation(fields: [benevoleId], references: [id])
-  benevoleId       String         @db.ObjectId
+  benevoleId       Int
   creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
-  creneauHoraireId String         @db.ObjectId
+  creneauHoraireId Int
   flexible         Boolean
 }
+
+// TODO Festival
