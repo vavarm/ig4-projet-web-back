@@ -1,7 +1,8 @@
 import { Association } from '@prisma/client'
+import { BenevoleEntity } from 'src/benevoles/entities/benevole.entity'
 
 export class AssociationEntity implements Association {
-    constructor(partial: Partial<AssociationEntity>) {
+    constructor(partial: any) {
         Object.assign(this, partial)
     }
 

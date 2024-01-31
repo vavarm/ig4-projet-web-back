@@ -1,7 +1,9 @@
 import { PrismaClient, EnumTailleTShirt, EnumRole } from '@prisma/client'
-import { AssociationEntity } from 'src/associations/entities/association.entity'
+import * as bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
+
+const roundsOfHashingPassword = parseInt(process.env.ROUNDS_OF_HASHING)
 
 async function main() {
 
@@ -33,13 +35,15 @@ async function main() {
 
     //// benevoles ////
 
+    const alicePassword = await bcrypt.hash('alicePassword', roundsOfHashingPassword)
+
     const alice = await prisma.benevole.upsert({
         where: { email: 'alice@alice.com' },
         update: {
             nom: 'Dupont',
             prenom: 'Alice',
             email: 'alice@alice.com',
-            password: 'alice',
+            password: alicePassword,
             adressePostale: '1 rue de la Paix',
             codePostal: '75000',
             ville: 'Paris',
@@ -59,7 +63,7 @@ async function main() {
             nom: 'Dupont',
             prenom: 'Alice',
             email: 'alice@alice.com',
-            password: 'alice',
+            password: alicePassword,
             adressePostale: '1 rue de la Paix',
             codePostal: '75000',
             ville: 'Paris',
@@ -77,13 +81,16 @@ async function main() {
         },
     })
     console.log({ alice })
+
+    const louisPassword = await bcrypt.hash('louisPassword', roundsOfHashingPassword)
+
     const louis = await prisma.benevole.upsert({
         where: { email: 'louis@louis.com' },
         update: {
             nom: 'Dupont',
             prenom: 'Louis',
             email: 'louis@louis.com',
-            password: 'louis',
+            password: louisPassword,
             adressePostale: '1 rue de la Paix',
             codePostal: '75000',
             ville: 'Paris',
@@ -103,7 +110,7 @@ async function main() {
             nom: 'Dupont',
             prenom: 'Louis',
             email: 'louis@louis.com',
-            password: 'louis',
+            password: louisPassword,
             adressePostale: '1 rue de la Paix',
             codePostal: '75000',
             ville: 'Paris',
@@ -121,13 +128,16 @@ async function main() {
         },
     })
     console.log({ louis })
+
+    const adminPassword = await bcrypt.hash('adminPassword', roundsOfHashingPassword)
+
     const admin = await prisma.benevole.upsert({
         where: { email: 'admin@admin.com' },
         update: {
             nom: 'Admin name',
             prenom: 'Admin firstname',
             email: 'admin@admin.com',
-            password: 'admin',
+            password: adminPassword,
             adressePostale: 'Admin address',
             codePostal: 'Admin postal code',
             ville: 'Admin city',
@@ -143,7 +153,7 @@ async function main() {
             nom: 'Admin name',
             prenom: 'Admin firstname',
             email: 'admin@admin.com',
-            password: 'admin',
+            password: adminPassword,
             adressePostale: 'Admin address',
             codePostal: 'Admin postal code',
             ville: 'Admin city',

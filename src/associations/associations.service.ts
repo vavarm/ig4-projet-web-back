@@ -15,19 +15,12 @@ export class AssociationsService {
   }
 
   async findAll() {
-    return this.prisma.association.findMany({
-      include: {
-        benevoles: true
-      }
-    })
+    return this.prisma.association.findMany()
   }
 
   async findOne(id: number) {
     return this.prisma.association.findUnique({
-      where: { id },
-      include: {
-        benevoles :true
-      }
+      where: { id }
     })
   }
 

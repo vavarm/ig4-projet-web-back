@@ -3,6 +3,7 @@ import { AssociationsService } from './associations.service'
 import { CreateAssociationDto } from './dto/create-association.dto'
 import { UpdateAssociationDto } from './dto/update-association.dto'
 import { AssociationEntity } from './entities/association.entity'
+import { BenevoleEntity } from 'src/benevoles/entities/benevole.entity'
 
 @Controller('associations')
 export class AssociationsController {

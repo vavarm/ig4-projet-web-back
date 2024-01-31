@@ -1,1 +1,6 @@
 reload prisma schema: npx prisma generate
+update database: npx prisma migrate dev
+seed database: yarn run db:seed
+start server in dev mode: yarn run start:dev
+
+the password must be longer than or equal to 6 characters

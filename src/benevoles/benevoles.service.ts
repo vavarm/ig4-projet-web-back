@@ -3,7 +3,9 @@ import { CreateBenevoleDto } from './dto/create-benevole.dto'
 import { UpdateBenevoleDto } from './dto/update-benevole.dto'
 import { UpdateBenevoleAdminDto } from './dto/update-benevole.admin.dto'
 import { PrismaService } from '../prisma/prisma.service'
-import { EnumTailleTShirt, EnumHebergement, EnumRole } from '@prisma/client'
+import * as bcrypt from 'bcrypt'
+
+const roundsOfHashingPassword = parseInt(process.env.ROUNDS_OF_HASHING)
 
 @Injectable()
 export class BenevolesService {
@@ -11,6 +13,7 @@ export class BenevolesService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(createBenevoleDto: CreateBenevoleDto) {
+    createBenevoleDto.password = await bcrypt.hash(createBenevoleDto.password, roundsOfHashingPassword)
     let associations = []
     if (createBenevoleDto.associations != undefined) {
       associations = createBenevoleDto.associations.map(association => ({ id: association.id }))
@@ -46,9 +49,14 @@ export class BenevolesService {
   }
 
   async update(id: number, updateBenevoleDto: UpdateBenevoleDto) {
-    let associations = []
-    if (updateBenevoleDto.associations != undefined) {
-      associations = updateBenevoleDto.associations.map(association => ({ id: association.id }))
+    if (!await this.prisma.benevole.findUnique({ where: { id } })) {
+      return null
+    }
+    if (updateBenevoleDto.password != undefined) {
+      updateBenevoleDto.password = await bcrypt.hash(updateBenevoleDto.password, roundsOfHashingPassword)
+    }
+    if (updateBenevoleDto.associations === undefined) {
+      updateBenevoleDto.associations = []
     }
 
     return this.prisma.benevole.update({
@@ -56,16 +64,21 @@ export class BenevolesService {
       data: {
         ...updateBenevoleDto,
         associations: {
-          connect: associations
+          connect: updateBenevoleDto.associations
         }
       }
     })
   }
 
   async updateAdmin(id: number, updateBenevoleAdminDto: UpdateBenevoleAdminDto) {
-    let associations = []
-    if (updateBenevoleAdminDto.associations != undefined) {
-      associations = updateBenevoleAdminDto.associations.map(association => ({ id: association.id }))
+    if (!await this.prisma.benevole.findUnique({ where: { id } })) {
+      return null
+    }
+    if (updateBenevoleAdminDto.password != undefined) {
+      updateBenevoleAdminDto.password = await bcrypt.hash(updateBenevoleAdminDto.password, roundsOfHashingPassword)
+    }
+    if (updateBenevoleAdminDto.associations === undefined) {
+      updateBenevoleAdminDto.associations = []
     }
 
     return this.prisma.benevole.update({
@@ -73,7 +86,7 @@ export class BenevolesService {
       data: {
         ...updateBenevoleAdminDto,
         associations: {
-          connect: associations
+          connect: updateBenevoleAdminDto.associations
         }
       }
     })
