@@ -49,12 +49,6 @@ export class CreateBenevoleDto {
     @IsEnum(EnumRole)
     role: EnumRole
 
-    @IsBoolean()
-    compteValide: boolean
-
-    @IsBoolean()
-    present: boolean
-
     @IsArray()
     associations: AssociationEntity[]
 

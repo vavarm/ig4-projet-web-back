@@ -53,7 +53,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Benevole,
             compteValide: true,
-            present: false,
             associations:
             {
                 connect: [{ id: asso1.id }, { id: asso2.id }]
@@ -73,7 +72,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Benevole,
             compteValide: true,
-            present: false,
             associations:
             {
                 connect: [{ id: asso1.id }, { id: asso2.id }]
@@ -100,7 +98,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Benevole,
             compteValide: false,
-            present: false,
             associations:
             {
                 connect: [{ id: asso1.id }]
@@ -120,7 +117,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Benevole,
             compteValide: false,
-            present: false,
             associations:
             {
                 connect: [{ id: asso1.id }]
@@ -147,7 +143,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Admin,
             compteValide: true,
-            present: false,
         },
         create: {
             nom: 'Admin name',
@@ -163,7 +158,6 @@ async function main() {
             hebergement: "AUCUN",
             role: EnumRole.Admin,
             compteValide: true,
-            present: false,
         },
     })
     console.log({ admin })

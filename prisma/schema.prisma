@@ -47,7 +47,6 @@ model Benevole {
   hebergement      EnumHebergement
   role             EnumRole
   compteValide     Boolean          @default(false)
-  present          Boolean          @default(false)
   posteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
   posteReferenceId Int?
   planningsPostes  PlanningPoste[]

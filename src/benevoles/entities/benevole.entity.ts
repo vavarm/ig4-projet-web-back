@@ -38,8 +38,6 @@ export class BenevoleEntity implements Benevole {
 
     compteValide: boolean
 
-    present: boolean
-
     // TODO
     posteReferenceId: number | null
     posteReference: Poste | null

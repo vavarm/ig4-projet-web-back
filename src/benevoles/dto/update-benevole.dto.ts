@@ -10,6 +10,4 @@ export class UpdateBenevoleDto extends PartialType(CreateBenevoleDto) {
     role: EnumRole
     @Exclude()
     compteValide: boolean
-    @Exclude()
-    present: boolean
 }
