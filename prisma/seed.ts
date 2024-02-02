@@ -13,8 +13,8 @@ async function main() {
     await prisma.benevole.deleteMany()
 
     // reset autoincrement
-    await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 3`
-    await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 4`
+    await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -22,7 +22,6 @@ async function main() {
         where: { nom: 'Association 1' },
         update: {},
         create: {
-            id: 1,
             nom: 'Association 1',
             email: 'asso1@asso1.com',
         },
@@ -32,7 +31,6 @@ async function main() {
         where: { nom: 'Association 2' },
         update: {},
         create: {
-            id: 2,
             nom: 'Association 2',
             email: 'asso2@asso2.com',
         },
@@ -47,7 +45,6 @@ async function main() {
         where: { email: 'alice@alice.com' },
         update: {},
         create: {
-            id: 1,
             nom: 'Dupont',
             prenom: 'Alice',
             email: 'alice@alice.com',
@@ -75,7 +72,6 @@ async function main() {
         where: { email: 'louis@louis.com' },
         update: {},
         create: {
-            id: 2,
             nom: 'Dupont',
             prenom: 'Louis',
             email: 'louis@louis.com',
@@ -103,7 +99,6 @@ async function main() {
         where: { email: 'admin@admin.com' },
         update: {},
         create: {
-            id: 3,
             nom: 'Admin name',
             prenom: 'Admin firstname',
             email: 'admin@admin.com',
