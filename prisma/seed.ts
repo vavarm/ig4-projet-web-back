@@ -12,6 +12,10 @@ async function main() {
     await prisma.association.deleteMany()
     await prisma.benevole.deleteMany()
 
+    // reset autoincrement
+    await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 3`
+    await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 4`
+
     //// associations ////
 
     const asso1 = await prisma.association.upsert({
