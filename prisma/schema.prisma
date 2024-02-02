@@ -32,52 +32,52 @@ enum EnumRole {
 }
 
 model Benevole {
-  id               Int              @id @default(autoincrement())
-  nom              String
-  prenom           String
-  email            String           @unique
-  password         String
-  adressePostale   String
-  codePostal       String
-  ville            String
-  telephone        String
-  associations     Association[]
-  taille_tshirt    EnumTailleTShirt
-  vegetarien       Boolean
-  hebergement      EnumHebergement
-  role             EnumRole
-  compteValide     Boolean          @default(false)
-  posteReference   Poste?           @relation(fields: [posteReferenceId], references: [id])
-  posteReferenceId Int?
-  planningsPostes  PlanningPoste[]
-  planningsEspaces PlanningEspace[]
+  id                  Int                   @id @default(autoincrement())
+  nom                 String
+  prenom              String
+  email               String                @unique
+  password            String
+  adressePostale      String
+  codePostal          String
+  ville               String
+  telephone           String
+  associations        Association[]
+  taille_tshirt       EnumTailleTShirt
+  vegetarien          Boolean
+  hebergement         EnumHebergement
+  role                EnumRole
+  compteValide        Boolean               @default(false)
+  posteReference      Poste?                @relation(fields: [posteReferenceId], references: [id])
+  posteReferenceId    Int?
+  planningsEspaces    PlanningEspace[]
+  InscriptionFestival InscriptionFestival[]
 }
 
 model Association {
   id        Int        @id @default(autoincrement())
   nom       String     @unique
   benevoles Benevole[]
-  email     String
+  email     String     @unique
 }
 
 model Poste {
-  id              Int             @id @default(autoincrement())
-  nom             String
-  referents       Benevole[]
-  message         Message[]
-  espaces         Espace[]
-  planningsPostes PlanningPoste[]
+  id           Int        @id @default(autoincrement())
+  nom          String
+  referents    Benevole[]
+  message      Message[]
+  espaces      Espace[]
+  festival     Festival   @relation(fields: [festivalYear], references: [year])
+  festivalYear Int
 }
 
 model Jeu {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   titre       String
   editeur     String
   nbJoueurs   String
   recu        Boolean
   lienSiteWeb String
-  espace      Espace  @relation(fields: [espaceId], references: [id])
-  espaceId    Int
+  espaces     Espace[]
 }
 
 model Espace {
@@ -100,7 +100,7 @@ model Message {
 
 model Jour {
   id               Int              @id @default(autoincrement())
-  label            String
+  label            String           @unique
   creneauxHoraires CreneauHoraire[]
 }
 
@@ -112,19 +112,7 @@ model CreneauHoraire {
   horaireFinMinutes   Int
   jour                Jour             @relation(fields: [jourId], references: [id])
   jourId              Int
-  planningsPostes     PlanningPoste[]
   planningsEspaces    PlanningEspace[]
-}
-
-model PlanningPoste {
-  id               Int            @id @default(autoincrement())
-  poste            Poste          @relation(fields: [posteId], references: [id])
-  posteId          Int
-  benevole         Benevole       @relation(fields: [benevoleId], references: [id])
-  benevoleId       Int
-  creneauHoraire   CreneauHoraire @relation(fields: [creneauHoraireId], references: [id])
-  creneauHoraireId Int
-  flexible         Boolean
 }
 
 model PlanningEspace {
@@ -138,4 +126,18 @@ model PlanningEspace {
   flexible         Boolean
 }
 
-// TODO Festival
+model Festival {
+  year                Int                   @id
+  InscriptionFestival InscriptionFestival[]
+  Poste               Poste[]
+}
+
+model InscriptionFestival {
+  benevole     Benevole @relation(fields: [benevoleId], references: [id])
+  benevoleId   Int
+  festival     Festival @relation(fields: [festivalYear], references: [year])
+  festivalYear Int
+  present      Boolean  @default(false)
+
+  @@id([benevoleId, festivalYear])
+}

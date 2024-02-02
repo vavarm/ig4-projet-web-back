@@ -7,6 +7,8 @@ import * as cookieParser from 'cookie-parser'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
+  // TODO cors with env
+
   app.use(cookieParser()) // This will allow us to use cookies in the application
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true })) // whitelist: true will remove all the properties that are not defined in the DTO

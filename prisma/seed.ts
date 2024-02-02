@@ -18,6 +18,7 @@ async function main() {
         where: { nom: 'Association 1' },
         update: {},
         create: {
+            id: 1,
             nom: 'Association 1',
             email: 'asso1@asso1.com',
         },
@@ -27,6 +28,7 @@ async function main() {
         where: { nom: 'Association 2' },
         update: {},
         create: {
+            id: 2,
             nom: 'Association 2',
             email: 'asso2@asso2.com',
         },
@@ -39,26 +41,9 @@ async function main() {
 
     const alice = await prisma.benevole.upsert({
         where: { email: 'alice@alice.com' },
-        update: {
-            nom: 'Dupont',
-            prenom: 'Alice',
-            email: 'alice@alice.com',
-            password: alicePassword,
-            adressePostale: '1 rue de la Paix',
-            codePostal: '75000',
-            ville: 'Paris',
-            telephone: '0123456789',
-            taille_tshirt: EnumTailleTShirt.M,
-            vegetarien: false,
-            hebergement: "AUCUN",
-            role: EnumRole.Benevole,
-            compteValide: true,
-            associations:
-            {
-                connect: [{ id: asso1.id }, { id: asso2.id }]
-            }
-        },
+        update: {},
         create: {
+            id: 1,
             nom: 'Dupont',
             prenom: 'Alice',
             email: 'alice@alice.com',
@@ -84,26 +69,9 @@ async function main() {
 
     const louis = await prisma.benevole.upsert({
         where: { email: 'louis@louis.com' },
-        update: {
-            nom: 'Dupont',
-            prenom: 'Louis',
-            email: 'louis@louis.com',
-            password: louisPassword,
-            adressePostale: '1 rue de la Paix',
-            codePostal: '75000',
-            ville: 'Paris',
-            telephone: '0123456789',
-            taille_tshirt: EnumTailleTShirt.M,
-            vegetarien: false,
-            hebergement: "AUCUN",
-            role: EnumRole.Benevole,
-            compteValide: false,
-            associations:
-            {
-                connect: [{ id: asso1.id }]
-            }
-        },
+        update: {},
         create: {
+            id: 2,
             nom: 'Dupont',
             prenom: 'Louis',
             email: 'louis@louis.com',
@@ -129,22 +97,9 @@ async function main() {
 
     const admin = await prisma.benevole.upsert({
         where: { email: 'admin@admin.com' },
-        update: {
-            nom: 'Admin name',
-            prenom: 'Admin firstname',
-            email: 'admin@admin.com',
-            password: adminPassword,
-            adressePostale: 'Admin address',
-            codePostal: 'Admin postal code',
-            ville: 'Admin city',
-            telephone: '000000000',
-            taille_tshirt: EnumTailleTShirt.L,
-            vegetarien: false,
-            hebergement: "AUCUN",
-            role: EnumRole.Admin,
-            compteValide: true,
-        },
+        update: {},
         create: {
+            id: 3,
             nom: 'Admin name',
             prenom: 'Admin firstname',
             email: 'admin@admin.com',
