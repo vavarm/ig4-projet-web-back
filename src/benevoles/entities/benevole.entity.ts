@@ -1,4 +1,4 @@
-import { Benevole, EnumTailleTShirt, EnumHebergement, EnumRole, Poste, PlanningEspace, PlanningPoste } from '@prisma/client'
+import { Benevole, EnumTailleTShirt, EnumHebergement, EnumRole, Poste, PlanningEspace } from '@prisma/client'
 import { Exclude } from 'class-transformer'
 import { AssociationEntity } from 'src/associations/entities/association.entity'
 
@@ -41,10 +41,6 @@ export class BenevoleEntity implements Benevole {
     // TODO
     posteReferenceId: number | null
     posteReference: Poste | null
-
-    // TODO
-    planningsPostes: PlanningPoste[]
-
 
     // TODO
     planningsEspaces: PlanningEspace[]
