@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common'
 import { BenevolesService } from './benevoles.service'
 import { CreateBenevoleDto } from './dto/create-benevole.dto'
 import { UpdateBenevoleDto } from './dto/update-benevole.dto'
@@ -34,16 +44,28 @@ export class BenevolesController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
-  async update(@Param('id', ParseIntPipe) id: number, @Body() updateBenevoleDto: UpdateBenevoleDto) {
-    const benevole = await this.benevolesService.update(id, updateBenevoleDto)
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateBenevoleDto: UpdateBenevoleDto,
+  ) {
+    const benevole = await this.benevolesService.update(
+      id,
+      updateBenevoleDto,
+    )
     return new BenevoleEntity(benevole)
   }
 
   @Patch('admin/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(EnumRole.Admin)
-  async updateAdmin(@Param('id', ParseIntPipe) id: number, @Body() updateBenevoleAdminDto: UpdateBenevoleAdminDto) {
-    const benevole = await this.benevolesService.updateAdmin(id, updateBenevoleAdminDto)
+  async updateAdmin(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateBenevoleAdminDto: UpdateBenevoleAdminDto,
+  ) {
+    const benevole = await this.benevolesService.updateAdmin(
+      id,
+      updateBenevoleAdminDto,
+    )
     return new BenevoleEntity(benevole)
   }
 
