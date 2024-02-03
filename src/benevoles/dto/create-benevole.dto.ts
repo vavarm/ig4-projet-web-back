@@ -51,18 +51,4 @@ export class CreateBenevoleDto {
 
     @IsArray()
     associations: AssociationEntity[]
-
-    /*
-    // TODO posteReference: PosteEntity
-    posteReference: Buffer
-    posteReferenceId: string
-
-    // TODO planningsPostes: PlanningPosteEntity[]
-    @IsArray()
-    planningsPostes: Buffer[]
-
-    // TODO planningsEspaces: PlanningEspaceEntity[]
-    @IsArray()
-    planningsEspaces: Buffer[]
-    */
 }

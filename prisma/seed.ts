@@ -11,6 +11,7 @@ async function main() {
 
     await prisma.association.deleteMany()
     await prisma.benevole.deleteMany()
+    await prisma.festival.deleteMany()
 
     // reset autoincrement
     await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
@@ -115,6 +116,17 @@ async function main() {
         },
     })
     console.log({ admin })
+
+    //// festivals ////
+
+    const festival1 = await prisma.festival.upsert({
+        where: { year: 2021 },
+        update: {},
+        create: {
+            year: 2021,
+        },
+    })
+    console.log({ festival1 })
 
 }
 
