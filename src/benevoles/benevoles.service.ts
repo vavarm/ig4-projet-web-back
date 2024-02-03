@@ -21,7 +21,7 @@ export class BenevolesService {
 
     console.log(createBenevoleDto)
 
-    return this.prisma.benevole.create({
+    return await this.prisma.benevole.create({
       data: {
         ...createBenevoleDto,
         associations: {
@@ -32,7 +32,7 @@ export class BenevolesService {
   }
 
   async findAll() {
-    return this.prisma.benevole.findMany({
+    return await this.prisma.benevole.findMany({
       include: {
         associations: true
       }
@@ -40,7 +40,7 @@ export class BenevolesService {
   }
 
   async findOne(id: number) {
-    return this.prisma.benevole.findUnique({
+    return await this.prisma.benevole.findUnique({
       where: { id },
       include: {
         associations: true
@@ -59,7 +59,7 @@ export class BenevolesService {
       updateBenevoleDto.associations = []
     }
 
-    return this.prisma.benevole.update({
+    return await this.prisma.benevole.update({
       where: { id },
       data: {
         ...updateBenevoleDto,
@@ -81,7 +81,7 @@ export class BenevolesService {
       updateBenevoleAdminDto.associations = []
     }
 
-    return this.prisma.benevole.update({
+    return await this.prisma.benevole.update({
       where: { id },
       data: {
         ...updateBenevoleAdminDto,
@@ -93,7 +93,10 @@ export class BenevolesService {
   }
 
   async remove(id: number) {
-    return this.prisma.benevole.delete({
+    await this.prisma.inscriptionFestival.deleteMany({
+      where: { benevoleId: id }
+    })
+    return await this.prisma.benevole.delete({
       where: { id }
     })
   }
