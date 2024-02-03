@@ -25,7 +25,6 @@ export class BenevolesController {
 
   @Post()
   async create(@Body() createBenevoleDto: CreateBenevoleDto) {
-    console.log(createBenevoleDto)
     const benevole = await this.benevolesService.create(createBenevoleDto)
     return new BenevoleEntity(benevole)
   }

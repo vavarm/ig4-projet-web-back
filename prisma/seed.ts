@@ -12,6 +12,7 @@ async function main() {
     await prisma.association.deleteMany()
     await prisma.benevole.deleteMany()
     await prisma.festival.deleteMany()
+    await prisma.inscriptionFestival.deleteMany()
 
     // reset autoincrement
     await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
@@ -127,6 +128,47 @@ async function main() {
         },
     })
     console.log({ festival1 })
+
+    const festival2 = await prisma.festival.upsert({
+        where: { year: 2022 },
+        update: {},
+        create: {
+            year: 2022,
+        },
+    })
+    console.log({ festival2 })
+
+    //// inscriptions ////
+
+    const inscription1 = await prisma.inscriptionFestival.upsert({
+        where: { benevoleId_festivalYear: { benevoleId: alice.id, festivalYear: festival1.year } },
+        update: {},
+        create: {
+            benevoleId: alice.id,
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ inscription1 })
+
+    const inscription2 = await prisma.inscriptionFestival.upsert({
+        where: { benevoleId_festivalYear: { benevoleId: louis.id, festivalYear: festival1.year } },
+        update: {},
+        create: {
+            benevoleId: louis.id,
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ inscription2 })
+
+    const inscription3 = await prisma.inscriptionFestival.upsert({
+        where: { benevoleId_festivalYear: { benevoleId: louis.id, festivalYear: festival2.year } },
+        update: {},
+        create: {
+            benevoleId: louis.id,
+            festivalYear: festival2.year,
+        },
+    })
+    console.log({ inscription3 })
 
 }
 

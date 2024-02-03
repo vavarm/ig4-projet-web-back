@@ -7,7 +7,7 @@ import * as cookieParser from 'cookie-parser'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // TODO cors with env
+  app.enableCors({ origin: process.env.FRONTEND_URL, credentials: true }) // This will allow us to send cookies from the client to the server
 
   app.use(cookieParser()) // This will allow us to use cookies in the application
 

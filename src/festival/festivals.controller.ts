@@ -24,7 +24,6 @@ export class FestivalsController {
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(EnumRole.Admin)
     async create(@Body() createFestivalDto: CreateFestivalDto) {
-        console.log(createFestivalDto)
         const festival = await this.festivalsService.create(createFestivalDto)
         return new FestivalEntity(festival)
     }
