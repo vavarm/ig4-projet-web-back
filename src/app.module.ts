@@ -6,9 +6,10 @@ import { AuthModule } from './auth/auth.module'
 import { AssociationsModule } from './associations/associations.module'
 import { FestivalsModule } from './festival/festivals.module'
 import { InscriptionsModule } from './inscriptions/inscriptions.module'
+import { PostesModule } from './postes/postes.module'
 
 @Module({
-  imports: [BenevolesModule, AuthModule, AssociationsModule, FestivalsModule, InscriptionsModule],
+  imports: [BenevolesModule, AuthModule, AssociationsModule, FestivalsModule, InscriptionsModule, PostesModule],
   controllers: [AppController],
   providers: [AppService],
 })

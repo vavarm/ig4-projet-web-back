@@ -9,14 +9,16 @@ async function main() {
 
     //// RESET ////
 
-    await prisma.association.deleteMany()
-    await prisma.benevole.deleteMany()
-    await prisma.festival.deleteMany()
     await prisma.inscriptionFestival.deleteMany()
+    await prisma.benevole.deleteMany()
+    await prisma.association.deleteMany()
+    await prisma.poste.deleteMany()
+    await prisma.festival.deleteMany()
 
     // reset autoincrement
     await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "Poste_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -169,6 +171,48 @@ async function main() {
         },
     })
     console.log({ inscription3 })
+
+    //// postes ////
+
+    const poste1 = await prisma.poste.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            nom: 'Accueil',
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ poste1 })
+
+    const poste2 = await prisma.poste.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            nom: 'Animations jeux',
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ poste2 })
+
+    const poste3 = await prisma.poste.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            nom: 'Accueil',
+            festivalYear: festival2.year,
+        },
+    })
+    console.log({ poste3 })
+
+    const poste4 = await prisma.poste.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+            nom: 'Animations jeux',
+            festivalYear: festival2.year,
+        },
+    })
+    console.log({ poste4 })
 
 }
 
