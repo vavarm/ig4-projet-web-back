@@ -8,24 +8,40 @@ export class FestivalsService {
     constructor(private readonly prisma: PrismaService) { }
 
     async create(createFestivalDto: CreateFestivalDto) {
-        return this.prisma.festival.create({
+        return await this.prisma.festival.create({
             data: createFestivalDto
         })
     }
 
     async findAll() {
-        return this.prisma.festival.findMany()
+        return await this.prisma.festival.findMany({
+            include: {
+                postes: true
+            }
+        })
     }
 
     async findOne(id: number) {
-        return this.prisma.festival.findUnique({
+        return await this.prisma.festival.findUnique({
             where: { year: id },
+            include: {
+                postes: true
+            }
         })
     }
 
     async remove(id: number) {
-        return this.prisma.festival.delete({
+        await this.prisma.inscriptionFestival.deleteMany({
+            where: { festivalYear: id }
+        })
+        await this.prisma.poste.deleteMany({
+            where: { festivalYear: id }
+        })
+        return await this.prisma.festival.delete({
             where: { year: id },
+            include: {
+                postes: true
+            }
         })
     }
 }

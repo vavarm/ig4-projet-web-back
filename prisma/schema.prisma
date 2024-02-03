@@ -104,6 +104,8 @@ model Jour {
   id               Int              @id @default(autoincrement())
   label            String           @unique
   creneauxHoraires CreneauHoraire[]
+  festival         Festival         @relation(fields: [festivalYear], references: [year])
+  festivalYear     Int
 }
 
 model CreneauHoraire {
@@ -130,8 +132,9 @@ model PlanningEspace {
 
 model Festival {
   year                Int                   @id
-  InscriptionFestival InscriptionFestival[]
-  Poste               Poste[]
+  inscriptionFestival InscriptionFestival[]
+  postes              Poste[]
+  jours               Jour[]
 }
 
 model InscriptionFestival {

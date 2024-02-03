@@ -1,7 +1,6 @@
 import { Festival } from '@prisma/client'
-/* TODO
-import { PosteEntity } from 'src/postes/entities/poste.entity'
-*/
+import { Poste } from '@prisma/client'
+
 
 export class FestivalEntity implements Festival {
     constructor(partial: Partial<FestivalEntity>) {
@@ -10,7 +9,5 @@ export class FestivalEntity implements Festival {
 
     year: number
 
-    /* TODO
-    postes: PosteEntity[];
-    */
+    postes: Poste[]
 }
