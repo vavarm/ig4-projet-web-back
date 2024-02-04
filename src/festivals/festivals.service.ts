@@ -41,23 +41,47 @@ export class FestivalsService {
                 where: { jourId: jour.id }
             })
             for (const creneau of creneaux) {
+                // remove planningEspaces
                 await this.prisma.planningEspace.deleteMany({
                     where: { creneauHoraireId: creneau.id }
                 })
             }
+            // remove creneaux
             await this.prisma.creneauHoraire.deleteMany({
                 where: { jourId: jour.id }
             })
         }
+        // remove jours
         await this.prisma.jour.deleteMany({
             where: { festivalYear: id }
         })
+        // remove inscriptionFestivals
         await this.prisma.inscriptionFestival.deleteMany({
             where: { festivalYear: id }
         })
+        const postes = await this.prisma.poste.findMany({
+            where: { festivalYear: id }
+        })
+        for (const poste of postes) {
+            const espaces = await this.prisma.espace.findMany({
+                where: { posteId: poste.id }
+            })
+            for (const espace of espaces) {
+                // remove planningEspaces
+                await this.prisma.planningEspace.deleteMany({
+                    where: { espaceId: espace.id }
+                })
+            }
+            // remove espaces
+            await this.prisma.espace.deleteMany({
+                where: { posteId: poste.id }
+            })
+        }
+        // remove postes
         await this.prisma.poste.deleteMany({
             where: { festivalYear: id }
         })
+        // remove festival
         return await this.prisma.festival.delete({
             where: { year: id },
             include: {

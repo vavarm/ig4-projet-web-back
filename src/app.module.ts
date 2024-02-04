@@ -9,6 +9,7 @@ import { InscriptionsModule } from './inscriptions/inscriptions.module'
 import { PostesModule } from './postes/postes.module'
 import { JoursModule } from './jours/jours.module'
 import { CreneauHoraireModule } from './creneaux-horaire/creneaux-horaire.module'
+import { EspacesModule } from './espaces/espaces.module'
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { CreneauHoraireModule } from './creneaux-horaire/creneaux-horaire.module
     InscriptionsModule,
     PostesModule,
     JoursModule,
-    CreneauHoraireModule
+    CreneauHoraireModule,
+    EspacesModule
   ],
   controllers: [AppController],
   providers: [AppService],

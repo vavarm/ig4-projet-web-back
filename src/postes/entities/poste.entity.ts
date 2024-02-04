@@ -1,6 +1,5 @@
-import { Poste } from '@prisma/client'
+import { Poste, Espace } from '@prisma/client'
 import { BenevoleEntity } from 'src/benevoles/entities/benevole.entity'
-import { FestivalEntity } from 'src/festivals/entities/festival.entity'
 
 export class PosteEntity implements Poste {
     constructor(partial: Partial<PosteEntity>) {
@@ -13,11 +12,11 @@ export class PosteEntity implements Poste {
 
     referents: BenevoleEntity[]
 
+    nbPlaces: number
+
     // TODO messages: MessageEntity[]
 
-    // TODO espaces: EspaceEntity[]
+    espaces: Espace[]
 
     festivalYear: number
-
-    festival: FestivalEntity
 }

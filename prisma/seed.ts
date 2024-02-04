@@ -12,6 +12,7 @@ async function main() {
     await prisma.inscriptionFestival.deleteMany()
     await prisma.benevole.deleteMany()
     await prisma.association.deleteMany()
+    await prisma.espace.deleteMany()
     await prisma.poste.deleteMany()
     await prisma.creneauHoraire.deleteMany()
     await prisma.jour.deleteMany()
@@ -23,6 +24,7 @@ async function main() {
     await prisma.$executeRaw`ALTER SEQUENCE "Poste_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Jour_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "CreneauHoraire_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "Espace_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -343,6 +345,52 @@ async function main() {
         },
     })
     console.log({ creneau6 })
+
+    //// espaces ////
+
+    const espace1 = await prisma.espace.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            nom: 'Espace 1',
+            nbPlaces: 3,
+            posteId: poste1.id,
+        },
+    })
+    console.log({ espace1 })
+
+    const espace2 = await prisma.espace.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            nom: 'Espace 2',
+            nbPlaces: 5,
+            posteId: poste1.id,
+        },
+    })
+    console.log({ espace2 })
+
+    const espace3 = await prisma.espace.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            nom: 'Espace 3',
+            nbPlaces: 3,
+            posteId: poste2.id,
+        },
+    })
+    console.log({ espace3 })
+
+    const espace4 = await prisma.espace.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+            nom: 'Espace 4',
+            nbPlaces: 6,
+            posteId: poste2.id,
+        },
+    })
+    console.log({ espace4 })
 }
 
 main()

@@ -9,8 +9,6 @@ import { JwtStrategy } from './jwt.strategy'
 
 export const jwtSecret = process.env.JWT_SECRET
 
-const roundsOfHashingPassword = process.env.ROUNDS_OF_HASHING
-
 @Module({
     imports: [
         PrismaModule,
