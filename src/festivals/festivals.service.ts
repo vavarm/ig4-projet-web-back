@@ -16,7 +16,8 @@ export class FestivalsService {
     async findAll() {
         return await this.prisma.festival.findMany({
             include: {
-                postes: true
+                postes: true,
+                jours: true
             }
         })
     }
@@ -25,12 +26,16 @@ export class FestivalsService {
         return await this.prisma.festival.findUnique({
             where: { year: id },
             include: {
-                postes: true
+                postes: true,
+                jours: true
             }
         })
     }
 
     async remove(id: number) {
+        await this.prisma.jour.deleteMany({
+            where: { festivalYear: id }
+        })
         await this.prisma.inscriptionFestival.deleteMany({
             where: { festivalYear: id }
         })
@@ -40,7 +45,8 @@ export class FestivalsService {
         return await this.prisma.festival.delete({
             where: { year: id },
             include: {
-                postes: true
+                postes: true,
+                jours: true
             }
         })
     }

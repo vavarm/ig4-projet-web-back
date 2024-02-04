@@ -101,12 +101,12 @@ model Message {
 }
 
 model Jour {
-  id               Int              @id @default(autoincrement())
-  label            String
-  numeroJour       Int
-  creneauxHoraires CreneauHoraire[]
-  festival         Festival         @relation(fields: [festivalYear], references: [year])
-  festivalYear     Int
+  id              Int              @id @default(autoincrement())
+  label           String
+  numeroJour      Int              @default(1)
+  creneauxHoraire CreneauHoraire[]
+  festival        Festival         @relation(fields: [festivalYear], references: [year])
+  festivalYear    Int
 
   @@unique([label, festivalYear])
   @@unique([numeroJour, festivalYear])

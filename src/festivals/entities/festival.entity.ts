@@ -1,5 +1,5 @@
 import { Festival } from '@prisma/client'
-import { Poste } from '@prisma/client'
+import { Poste, Jour } from '@prisma/client'
 
 
 export class FestivalEntity implements Festival {
@@ -8,6 +8,8 @@ export class FestivalEntity implements Festival {
     }
 
     year: number
+
+    jours: Jour[]
 
     postes: Poste[]
 }

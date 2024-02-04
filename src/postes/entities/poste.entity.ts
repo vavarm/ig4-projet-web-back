@@ -1,6 +1,6 @@
 import { Poste } from '@prisma/client'
 import { BenevoleEntity } from 'src/benevoles/entities/benevole.entity'
-import { FestivalEntity } from 'src/festival/entities/festival.entity'
+import { FestivalEntity } from 'src/festivals/entities/festival.entity'
 
 export class PosteEntity implements Poste {
     constructor(partial: Partial<PosteEntity>) {

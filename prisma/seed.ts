@@ -14,11 +14,13 @@ async function main() {
     await prisma.association.deleteMany()
     await prisma.poste.deleteMany()
     await prisma.festival.deleteMany()
+    await prisma.jour.deleteMany()
 
     // reset autoincrement
     await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Poste_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "Jour_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -213,6 +215,52 @@ async function main() {
         },
     })
     console.log({ poste4 })
+
+    //// jours ////
+
+    const jour1 = await prisma.jour.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            label: 'Vendredi',
+            numeroJour: 1,
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ jour1 })
+
+    const jour2 = await prisma.jour.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            label: 'Samedi',
+            numeroJour: 2,
+            festivalYear: festival1.year,
+        },
+    })
+    console.log({ jour2 })
+
+    const jour3 = await prisma.jour.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            label: 'Vendredi',
+            numeroJour: 1,
+            festivalYear: festival2.year,
+        },
+    })
+    console.log({ jour3 })
+
+    const jour4 = await prisma.jour.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+            label: 'Samedi',
+            numeroJour: 2,
+            festivalYear: festival2.year,
+        },
+    })
+    console.log({ jour4 })
 
 }
 
