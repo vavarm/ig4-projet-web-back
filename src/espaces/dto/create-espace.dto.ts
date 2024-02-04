@@ -6,7 +6,7 @@ export class CreateEspaceDto {
 
     @IsNumber()
     @IsNotEmpty()
-    nbPlaces: number
+    nbPlacesMax: number
 
     @IsNumber()
     @IsNotEmpty()

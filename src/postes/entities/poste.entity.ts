@@ -14,6 +14,8 @@ export class PosteEntity implements Poste {
 
     nbPlaces: number
 
+    nbPlacesMax: number
+
     // TODO messages: MessageEntity[]
 
     espaces: Espace[]

@@ -19,7 +19,7 @@ export class PostesService {
             await this.prisma.espace.create({
                 data: {
                     nom: createPosteDto.nom,
-                    nbPlaces: nbPlacesForDefaultEspace,
+                    nbPlacesMax: nbPlacesForDefaultEspace,
                     posteId: poste.id
                 }
             })
@@ -35,16 +35,24 @@ export class PostesService {
             }
         })
 
-        const postes = postesWithEspaces.map(poste => {
-            let currentNbPlaces = 0
+        const postes = []
+        for (const poste of postesWithEspaces) {
+            let nbPlaces = 0
+            let nbPlacesMax = 0
             for (const espace of poste.espaces) {
-                currentNbPlaces += espace.nbPlaces
+                nbPlacesMax += espace.nbPlacesMax
+                nbPlaces += await this.prisma.planningEspace.count({
+                    where: {
+                        espaceId: espace.id
+                    }
+                })
             }
-            return {
+            postes.push({
                 ...poste,
-                nbPlaces: currentNbPlaces
-            }
-        })
+                nbPlaces: nbPlaces,
+                nbPlacesMax: nbPlacesMax
+            })
+        }
 
         return postes
     }
@@ -57,13 +65,20 @@ export class PostesService {
             }
         })
 
-        let currentNbPlaces = 0
+        let nbPlaces = 0
+        let nbPlacesMax = 0
         for (const espace of postesWithEspaces.espaces) {
-            currentNbPlaces += espace.nbPlaces
+            nbPlacesMax += espace.nbPlacesMax
+            nbPlaces += await this.prisma.planningEspace.count({
+                where: {
+                    espaceId: espace.id
+                }
+            })
         }
         return {
             ...postesWithEspaces,
-            nbPlaces: currentNbPlaces
+            nbPlaces: nbPlaces,
+            nbPlacesMax: nbPlacesMax
         }
     }
 
@@ -75,16 +90,25 @@ export class PostesService {
             }
         })
 
-        const postes = postesWithEspaces.map(poste => {
-            let currentNbPlaces = 0
+        const postes = []
+
+        for (const poste of postesWithEspaces) {
+            let nbPlaces = 0
+            let nbPlacesMax = 0
             for (const espace of poste.espaces) {
-                currentNbPlaces += espace.nbPlaces
+                nbPlacesMax += espace.nbPlacesMax
+                nbPlaces += await this.prisma.planningEspace.count({
+                    where: {
+                        espaceId: espace.id
+                    }
+                })
             }
-            return {
+            postes.push({
                 ...poste,
-                nbPlaces: currentNbPlaces
-            }
-        })
+                nbPlaces: nbPlaces,
+                nbPlacesMax: nbPlacesMax
+            })
+        }
 
         return postes
     }

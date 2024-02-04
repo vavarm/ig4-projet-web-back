@@ -15,7 +15,22 @@ export class EspacesService {
     }
 
     async findAll() {
-        return await this.prisma.espace.findMany()
+        const espaces = await this.prisma.espace.findMany({
+            include: {
+                planningsEspaces: true
+            }
+        })
+        const espacesWithNbPlaces = []
+        for (const espace of espaces) {
+            const nbPlaces = await this.prisma.planningEspace.count({
+                where: { espaceId: espace.id }
+            })
+            espacesWithNbPlaces.push({
+                ...espace,
+                nbPlaces: nbPlaces
+            })
+        }
+        return espacesWithNbPlaces
     }
 
     async findAllByFestival(year: number) {
@@ -28,6 +43,12 @@ export class EspacesService {
                 where: { posteId: poste.id }
             })
             espaces.push(...espacesPoste)
+            espaces.forEach(async (espace) => {
+                const nbPlaces = await this.prisma.planningEspace.count({
+                    where: { espaceId: espace.id }
+                })
+                espace.nbPlaces = nbPlaces
+            })
         }
         return espaces
     }

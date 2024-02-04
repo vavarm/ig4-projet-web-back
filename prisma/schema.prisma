@@ -86,7 +86,7 @@ model Espace {
   id               Int              @id @default(autoincrement())
   nom              String
   jeux             Jeu[]
-  nbPlaces         Int
+  nbPlacesMax      Int
   poste            Poste            @relation(fields: [posteId], references: [id])
   posteId          Int
   planningsEspaces PlanningEspace[]

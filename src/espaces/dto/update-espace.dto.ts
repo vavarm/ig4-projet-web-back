@@ -6,5 +6,5 @@ export class UpdateEspaceDto {
 
     @IsNumber()
     @IsNotEmpty()
-    nbPlaces: number
+    nbPlacesMax: number
 }

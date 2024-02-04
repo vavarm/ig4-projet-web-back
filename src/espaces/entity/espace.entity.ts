@@ -9,9 +9,9 @@ export class EspaceEntity implements Espace {
 
     nom: string
 
-    currentNbPlaces: number
-
     nbPlaces: number
+
+    nbPlacesMax: number
 
     posteId: number
 

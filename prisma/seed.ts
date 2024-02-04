@@ -355,7 +355,7 @@ async function main() {
         update: {},
         create: {
             nom: 'Espace 1',
-            nbPlaces: 3,
+            nbPlacesMax: 3,
             posteId: poste1.id,
         },
     })
@@ -366,7 +366,7 @@ async function main() {
         update: {},
         create: {
             nom: 'Espace 2',
-            nbPlaces: 5,
+            nbPlacesMax: 5,
             posteId: poste1.id,
         },
     })
@@ -377,7 +377,7 @@ async function main() {
         update: {},
         create: {
             nom: 'Espace 3',
-            nbPlaces: 3,
+            nbPlacesMax: 3,
             posteId: poste2.id,
         },
     })
@@ -388,7 +388,7 @@ async function main() {
         update: {},
         create: {
             nom: 'Espace 4',
-            nbPlaces: 6,
+            nbPlacesMax: 6,
             posteId: poste2.id,
         },
     })
