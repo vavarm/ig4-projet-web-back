@@ -33,6 +33,22 @@ export class FestivalsService {
     }
 
     async remove(id: number) {
+        const jours = await this.prisma.jour.findMany({
+            where: { festivalYear: id }
+        })
+        for (const jour of jours) {
+            const creneaux = await this.prisma.creneauHoraire.findMany({
+                where: { jourId: jour.id }
+            })
+            for (const creneau of creneaux) {
+                await this.prisma.planningEspace.deleteMany({
+                    where: { creneauHoraireId: creneau.id }
+                })
+            }
+            await this.prisma.creneauHoraire.deleteMany({
+                where: { jourId: jour.id }
+            })
+        }
         await this.prisma.jour.deleteMany({
             where: { festivalYear: id }
         })

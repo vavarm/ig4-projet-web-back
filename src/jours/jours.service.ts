@@ -1,4 +1,3 @@
-// TODO: include creneaux horaire in the responseimport { Injectable } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
 import { CreateJourDto } from "./dto/create-jour.dto"
 import { PrismaService } from '../prisma/prisma.service'
@@ -15,22 +14,30 @@ export class JoursService {
     }
 
     async findAll() {
-        // TODO: include creneaux horaire in the response
-        return await this.prisma.jour.findMany()
+        return await this.prisma.jour.findMany({
+            include: { creneauxHoraire: true }
+        })
     }
 
     async findAllByFestival(year: number) {
-        // TODO: include creneaux horaire in the response
         return await this.prisma.jour.findMany({
-            where: { festivalYear: year }
+            where: { festivalYear: year },
+            include: { creneauxHoraire: true }
         })
     }
 
     async remove(id: number) {
-        // TODO: get all creneaux horaire by jourId
-        // TODO: get all planningEspaces by creneauId
-        // TODO: remove all planningEspaces
-        // TODO: remove all creneaux horaire
+        const creneaux = await this.prisma.creneauHoraire.findMany({
+            where: { jourId: id }
+        })
+        for (const creneau of creneaux) {
+            await this.prisma.planningEspace.deleteMany({
+                where: { creneauHoraireId: creneau.id }
+            })
+        }
+        await this.prisma.creneauHoraire.deleteMany({
+            where: { jourId: id }
+        })
         return await this.prisma.jour.delete({
             where: { id: id }
         })

@@ -13,14 +13,16 @@ async function main() {
     await prisma.benevole.deleteMany()
     await prisma.association.deleteMany()
     await prisma.poste.deleteMany()
-    await prisma.festival.deleteMany()
+    await prisma.creneauHoraire.deleteMany()
     await prisma.jour.deleteMany()
+    await prisma.festival.deleteMany()
 
     // reset autoincrement
     await prisma.$executeRaw`ALTER SEQUENCE "Association_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Benevole_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Poste_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Jour_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "CreneauHoraire_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -262,6 +264,85 @@ async function main() {
     })
     console.log({ jour4 })
 
+    //// creneaux horaire ////
+
+    const creneau1 = await prisma.creneauHoraire.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            horaireDebutHeures: 8,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 9,
+            horaireFinMinutes: 0,
+            jourId: jour1.id,
+        },
+    })
+    console.log({ creneau1 })
+
+    const creneau2 = await prisma.creneauHoraire.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            horaireDebutHeures: 9,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 10,
+            horaireFinMinutes: 0,
+            jourId: jour1.id,
+        },
+    })
+    console.log({ creneau2 })
+
+    const creneau3 = await prisma.creneauHoraire.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            horaireDebutHeures: 10,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 11,
+            horaireFinMinutes: 0,
+            jourId: jour1.id,
+        },
+    })
+    console.log({ creneau3 })
+
+    const creneau4 = await prisma.creneauHoraire.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+            horaireDebutHeures: 8,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 9,
+            horaireFinMinutes: 0,
+            jourId: jour2.id,
+        },
+    })
+    console.log({ creneau4 })
+
+    const creneau5 = await prisma.creneauHoraire.upsert({
+        where: { id: 5 },
+        update: {},
+        create: {
+            horaireDebutHeures: 9,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 10,
+            horaireFinMinutes: 0,
+            jourId: jour2.id,
+        },
+    })
+    console.log({ creneau5 })
+
+    const creneau6 = await prisma.creneauHoraire.upsert({
+        where: { id: 6 },
+        update: {},
+        create: {
+            horaireDebutHeures: 10,
+            horaireDebutMinutes: 0,
+            horaireFinHeures: 11,
+            horaireFinMinutes: 0,
+            jourId: jour2.id,
+        },
+    })
+    console.log({ creneau6 })
 }
 
 main()

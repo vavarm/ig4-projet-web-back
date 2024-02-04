@@ -8,6 +8,7 @@ import { FestivalsModule } from './festivals/festivals.module'
 import { InscriptionsModule } from './inscriptions/inscriptions.module'
 import { PostesModule } from './postes/postes.module'
 import { JoursModule } from './jours/jours.module'
+import { CreneauHoraireModule } from './creneaux-horaire/creneaux-horaire.module'
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { JoursModule } from './jours/jours.module'
     FestivalsModule,
     InscriptionsModule,
     PostesModule,
-    JoursModule
+    JoursModule,
+    CreneauHoraireModule
   ],
   controllers: [AppController],
   providers: [AppService],
