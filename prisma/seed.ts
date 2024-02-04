@@ -101,7 +101,7 @@ async function main() {
     })
     console.log({ louis })
 
-    const adminPassword = await bcrypt.hash('adminPassword', roundsOfHashingPassword)
+    const adminPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, roundsOfHashingPassword)
 
     const admin = await prisma.benevole.upsert({
         where: { email: 'admin@admin.com' },
@@ -109,7 +109,7 @@ async function main() {
         create: {
             nom: 'Admin name',
             prenom: 'Admin firstname',
-            email: 'admin@admin.com',
+            email: process.env.ADMIN_EMAIL,
             password: adminPassword,
             adressePostale: 'Admin address',
             codePostal: 'Admin postal code',
