@@ -10,6 +10,7 @@ async function main() {
     //// RESET ////
 
     await prisma.inscriptionFestival.deleteMany()
+    await prisma.planningEspace.deleteMany()
     await prisma.benevole.deleteMany()
     await prisma.association.deleteMany()
     await prisma.espace.deleteMany()
@@ -25,6 +26,7 @@ async function main() {
     await prisma.$executeRaw`ALTER SEQUENCE "Jour_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "CreneauHoraire_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Espace_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "PlanningEspace_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -391,6 +393,68 @@ async function main() {
         },
     })
     console.log({ espace4 })
+
+    //// planningEspaces ////
+
+    const planningEspace1 = await prisma.planningEspace.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            benevoleId: alice.id,
+            espaceId: espace1.id,
+            creneauHoraireId: creneau1.id,
+            flexible: false,
+        },
+    })
+    console.log({ planningEspace1 })
+
+    const planningEspace2 = await prisma.planningEspace.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            benevoleId: alice.id,
+            espaceId: espace2.id,
+            creneauHoraireId: creneau2.id,
+            flexible: false,
+        },
+    })
+    console.log({ planningEspace2 })
+
+    const planningEspace3 = await prisma.planningEspace.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            benevoleId: alice.id,
+            espaceId: espace2.id,
+            creneauHoraireId: creneau1.id,
+            flexible: false,
+        },
+    })
+    console.log({ planningEspace3 })
+
+    const planningEspace4 = await prisma.planningEspace.upsert({
+        where: { id: 4 },
+        update: {},
+        create: {
+            benevoleId: louis.id,
+            espaceId: espace2.id,
+            creneauHoraireId: creneau1.id,
+            flexible: false,
+        },
+    })
+    console.log({ planningEspace4 })
+
+    const planningEspace5 = await prisma.planningEspace.upsert({
+        where: { id: 5 },
+        update: {},
+        create: {
+            benevoleId: louis.id,
+            espaceId: espace2.id,
+            creneauHoraireId: creneau3.id,
+            flexible: false,
+        },
+    })
+    console.log({ planningEspace5 })
 }
 
 main()

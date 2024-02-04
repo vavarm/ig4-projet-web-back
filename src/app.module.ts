@@ -10,6 +10,7 @@ import { PostesModule } from './postes/postes.module'
 import { JoursModule } from './jours/jours.module'
 import { CreneauHoraireModule } from './creneaux-horaire/creneaux-horaire.module'
 import { EspacesModule } from './espaces/espaces.module'
+import { PlanningsEspacesModule } from './planningsEspaces/plannings-espaces.module'
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { EspacesModule } from './espaces/espaces.module'
     PostesModule,
     JoursModule,
     CreneauHoraireModule,
-    EspacesModule
+    EspacesModule,
+    PlanningsEspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
