@@ -17,14 +17,14 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Roles } from 'src/common/custom.decorator'
 import { EnumRole } from '@prisma/client'
+import { InscriptionsGuard } from './guards/inscriptions.guard'
 
 @Controller('inscriptions')
 export class InscriptionsController {
     constructor(private readonly inscriptionsService: InscriptionsService) { }
 
     @Post()
-    @UseGuards(JwtAuthGuard)
-    // TODO: guard to check if it's the benevole who is creating the inscription
+    @UseGuards(JwtAuthGuard, InscriptionsGuard)
     async create(@Body() createInscriptionDto: CreateInscriptionDto) {
         const inscription = await this.inscriptionsService.create(createInscriptionDto)
         return new InscriptionEntity(inscription)
@@ -64,8 +64,7 @@ export class InscriptionsController {
     }
 
     @Delete('/benevole/:benevoleId/festival/:festivalYear')
-    @UseGuards(JwtAuthGuard)
-    // TODO: guard to check if it's the benevole who is deleting the inscription
+    @UseGuards(JwtAuthGuard, InscriptionsGuard)
     async remove(
         @Param('benevoleId', ParseIntPipe) benevoleId: number,
         @Param('festivalYear', ParseIntPipe) festivalYear: number,
