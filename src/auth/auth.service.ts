@@ -35,13 +35,13 @@ export class AuthService {
 
         // Set the cookie
         const expirationDate = new Date(Date.now() + 1000 * 60 * 60 * 24) // 1 day
-        res.cookie('accessToken', jwt, { httpOnly: true, secure: true, sameSite: 'none', expires: expirationDate, path: '/', domain: process.env.FRONTEND_DOMAIN })
+        res.cookie('accessToken', jwt, { httpOnly: true, secure: false, sameSite: 'lax', expires: expirationDate })
 
         return benevole
     }
 
     async logout(res: Response) {
         // Remove the cookie
-        res.cookie('accessToken', '', { httpOnly: true, secure: true, sameSite: 'none', expires: new Date(0), path: '/', domain: process.env.FRONTEND_DOMAIN })
+        res.cookie('accessToken', '', { httpOnly: true, secure: false, sameSite: 'lax', expires: new Date(0) })
     }
 }

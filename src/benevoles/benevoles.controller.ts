@@ -18,6 +18,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { RolesGuard } from 'src/common/guards/roles.guard'
 import { Roles } from 'src/common/custom.decorator'
 import { EnumRole } from '@prisma/client'
+import { BenevolesGuard } from './guards/benevoles.guard'
 
 @Controller('benevoles')
 export class BenevolesController {
@@ -30,19 +31,21 @@ export class BenevolesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async findAll() {
     const benevoles = await this.benevolesService.findAll()
     return benevoles.map((benevole) => new BenevoleEntity(benevole))
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const benevole = await this.benevolesService.findOne(id)
     return new BenevoleEntity(benevole)
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, BenevolesGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBenevoleDto: UpdateBenevoleDto,

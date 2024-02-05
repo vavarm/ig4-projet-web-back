@@ -29,12 +29,14 @@ export class FestivalsController {
     }
 
     @Get()
+    @UseGuards(JwtAuthGuard)
     async findAll() {
         const festivals = await this.festivalsService.findAll()
         return festivals.map((festival) => new FestivalEntity(festival))
     }
 
     @Get(':id')
+    @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
         const festival = await this.festivalsService.findOne(id)
         return new FestivalEntity(festival)

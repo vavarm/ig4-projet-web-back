@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { CreatePlanningEspaceDto } from './dto/create-planning-espace.dto'
 import { PrismaService } from '../prisma/prisma.service'
 import { BenevoleEntity } from '../benevoles/entities/benevole.entity'
+import { EnumRole } from '@prisma/client'
 
 @Injectable()
 export class PlanningsEspacesService {
@@ -16,7 +17,6 @@ export class PlanningsEspacesService {
                 creneauHoraireId: createPlanningEspaceDto.creneauHoraireId
             }
         })
-        console.log(occurences)
         const flexible = occurences > 0 ? true : false
         const planningEspace = await this.prisma.planningEspace.create({
             data: {
@@ -112,7 +112,18 @@ export class PlanningsEspacesService {
         return planningsEspaces
     }
 
-    async remove(id: number) {
+    async remove(id: number, user: any) {
+        const planningEspace = await this.prisma.planningEspace.findUnique({
+            where: { id }
+        })
+        console.log(user.role !== EnumRole.Admin)
+        console.log(planningEspace.benevoleId !== user.id)
+        console.log(planningEspace.benevoleId)
+        console.log(user.id)
+        console.log(planningEspace.benevoleId !== user.id)
+        if (user.role !== EnumRole.Admin && planningEspace.benevoleId !== user.id) {
+            throw new Error('You are not allowed to delete this planningEspace')
+        }
         const deletedPlanningEspace = await this.prisma.planningEspace.delete({
             where: { id }
         })

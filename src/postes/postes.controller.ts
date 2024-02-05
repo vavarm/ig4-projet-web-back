@@ -29,18 +29,21 @@ export class PostesController {
     }
 
     @Get()
+    @UseGuards(JwtAuthGuard)
     async findAll() {
         const postes = await this.postesService.findAll()
         return postes.map((poste) => new PosteEntity(poste))
     }
 
     @Get(':id')
+    @UseGuards(JwtAuthGuard)
     async findOne(@Param('id', ParseIntPipe) id: number) {
         const poste = await this.postesService.findOne(id)
         return new PosteEntity(poste)
     }
 
     @Get('festival/:id')
+    @UseGuards(JwtAuthGuard)
     async findAllByFestival(@Param('id', ParseIntPipe) id: number) {
         const postes = await this.postesService.findAllByFestival(id)
         return postes.map((poste) => new PosteEntity(poste))
