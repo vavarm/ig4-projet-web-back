@@ -21,6 +21,10 @@ export class AuthService {
             throw new NotFoundException(`No benevole found for email: ${email}`)
         }
 
+        if (!benevole.compteValide) {
+            throw new UnauthorizedException('Account not validated')
+        }
+
         // Check if the password is correct
         const isPasswordValid = await bcrypt.compare(password, benevole.password)
 

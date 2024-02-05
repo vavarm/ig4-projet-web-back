@@ -10,7 +10,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     constructor(private benevolesService: BenevolesService) {
         super({
             jwtFromRequest: ExtractJwt.fromExtractors([
-                JwtStrategy.extractJWTFromCookies,
+                //JwtStrategy.extractJWTFromCookies,
                 ExtractJwt.fromAuthHeaderAsBearerToken(),
             ]),
             secretOrKey: jwtSecret,
