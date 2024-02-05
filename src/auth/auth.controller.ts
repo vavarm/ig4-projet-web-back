@@ -10,7 +10,8 @@ export class AuthController {
 
     @Post('login')
     async login(@Req() req: Request, @Res({ passthrough: true }) res: Response, @Body() { email, password }: LoginDto) {
-        return new BenevoleEntity(await this.authService.login(req, res, email, password))
+        const result = await this.authService.login(req, res, email, password)
+        return { benevole: new BenevoleEntity(result.benevole), accessToken: result.accessToken }
     }
 
     @Post('logout')

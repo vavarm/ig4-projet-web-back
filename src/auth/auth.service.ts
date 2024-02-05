@@ -37,7 +37,7 @@ export class AuthService {
         const expirationDate = new Date(Date.now() + 1000 * 60 * 60 * 24) // 1 day
         res.cookie('accessToken', jwt, { httpOnly: true, secure: false, sameSite: 'lax', expires: expirationDate })
 
-        return benevole
+        return { benevole: benevole, accessToken: jwt }
     }
 
     async logout(res: Response) {
