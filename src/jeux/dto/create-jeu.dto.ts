@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 export class CreateJeuDto {
     @IsNotEmpty()
@@ -8,45 +8,45 @@ export class CreateJeuDto {
     @IsNotEmpty()
     nom: string
 
-    @IsNotEmpty()
+    @IsString()
     auteur: string
 
-    @IsNotEmpty()
+    @IsString()
     editeur: string
 
-    @IsNotEmpty()
+    @IsString()
     nbJoueurs: string
 
-    @IsNotEmpty()
+    @IsString()
     ageMin: string
 
-    @IsNotEmpty()
+    @IsString()
     duree: string
 
-    @IsNotEmpty()
+    @IsString()
     type: string
 
-    @IsNotEmpty()
+    @IsString()
     notice: string
 
-    @IsNotEmpty()
+    @IsString()
     mecanismes: string
 
-    @IsNotEmpty()
+    @IsString()
     themes: string
 
-    @IsNotEmpty()
+    @IsString()
     tags: string
 
-    @IsNotEmpty()
+    @IsString()
     description: string
 
-    @IsNotEmpty()
+    @IsString()
     image: string
 
-    @IsNotEmpty()
+    @IsString()
     logo: string
 
-    @IsNotEmpty()
+    @IsString()
     video: string
 }

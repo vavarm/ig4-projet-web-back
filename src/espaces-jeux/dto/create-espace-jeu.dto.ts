@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 export class CreateEspaceJeuDto {
     @IsNotEmpty()
@@ -9,9 +9,9 @@ export class CreateEspaceJeuDto {
     @IsNumber()
     espaceId: number
 
-    @IsNotEmpty()
+    @IsString()
     aAnimer: string
 
-    @IsNotEmpty()
+    @IsString()
     recu: string
 }

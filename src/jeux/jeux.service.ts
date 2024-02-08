@@ -8,8 +8,10 @@ export class JeuxService {
     constructor(private readonly prisma: PrismaService) { }
 
     async create(createJeuDto: CreateJeuDto) {
-        return await this.prisma.jeu.create({
-            data: createJeuDto
+        return await this.prisma.jeu.upsert({
+            where: { idJeu: createJeuDto.idJeu },
+            update: createJeuDto,
+            create: createJeuDto
         })
     }
 

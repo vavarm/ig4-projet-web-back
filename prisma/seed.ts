@@ -570,7 +570,6 @@ async function main() {
         },
     })
     console.log({ espaceJeu3 })
-
 }
 
 main()

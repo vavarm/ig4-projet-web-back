@@ -9,9 +9,13 @@ export class EspacesService {
     constructor(private readonly prisma: PrismaService) { }
 
     async create(createEspaceDto: CreateEspaceDto) {
-        return await this.prisma.espace.create({
-            data: createEspaceDto
-        })
+        try {
+            return await this.prisma.espace.create({
+                data: createEspaceDto
+            })
+        } catch (e) {
+            return e
+        }
     }
 
     async findAll() {

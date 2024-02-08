@@ -112,6 +112,8 @@ model Espace {
   posteId          Int
   planningsEspaces PlanningEspace[]
   EspacesJeux      EspaceJeu[]
+
+  @@unique([nom, posteId])
 }
 
 model Message {
