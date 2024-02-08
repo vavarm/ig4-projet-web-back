@@ -73,23 +73,45 @@ model Poste {
 }
 
 model Jeu {
-  id          Int      @id @default(autoincrement())
-  titre       String
+  idJeu       Int         @id
+  nom         String
+  auteur      String
   editeur     String
   nbJoueurs   String
-  recu        Boolean
-  lienSiteWeb String
-  espaces     Espace[]
+  ageMin      String
+  duree       String
+  type        String
+  notice      String
+  mecanismes  String
+  themes      String
+  tags        String
+  description String
+  image       String
+  logo        String
+  video       String
+  EspacesJeux EspaceJeu[]
+}
+
+model EspaceJeu {
+  id       Int    @id @default(autoincrement())
+  jeu      Jeu    @relation(fields: [jeuId], references: [idJeu])
+  jeuId    Int
+  espace   Espace @relation(fields: [espaceId], references: [id])
+  espaceId Int
+  aAnimer  String
+  recu     String
+
+  @@unique([jeuId, espaceId])
 }
 
 model Espace {
   id               Int              @id @default(autoincrement())
   nom              String
-  jeux             Jeu[]
   nbPlacesMax      Int
   poste            Poste            @relation(fields: [posteId], references: [id])
   posteId          Int
   planningsEspaces PlanningEspace[]
+  EspacesJeux      EspaceJeu[]
 }
 
 model Message {

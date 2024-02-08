@@ -11,6 +11,8 @@ import { JoursModule } from './jours/jours.module'
 import { CreneauHoraireModule } from './creneaux-horaire/creneaux-horaire.module'
 import { EspacesModule } from './espaces/espaces.module'
 import { PlanningsEspacesModule } from './planningsEspaces/plannings-espaces.module'
+import { JeuxModule } from './jeux/jeux.module'
+import { EspacesJeuxModule } from './espaces-jeux/espaces-jeux.module'
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { PlanningsEspacesModule } from './planningsEspaces/plannings-espaces.mod
     CreneauHoraireModule,
     EspacesModule,
     PlanningsEspacesModule,
+    JeuxModule,
+    EspacesJeuxModule
   ],
   controllers: [AppController],
   providers: [AppService],

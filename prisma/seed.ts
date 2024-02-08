@@ -13,6 +13,8 @@ async function main() {
     await prisma.planningEspace.deleteMany()
     await prisma.benevole.deleteMany()
     await prisma.association.deleteMany()
+    await prisma.espaceJeu.deleteMany()
+    await prisma.jeu.deleteMany()
     await prisma.espace.deleteMany()
     await prisma.poste.deleteMany()
     await prisma.creneauHoraire.deleteMany()
@@ -27,6 +29,7 @@ async function main() {
     await prisma.$executeRaw`ALTER SEQUENCE "CreneauHoraire_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "Espace_id_seq" RESTART WITH 1`
     await prisma.$executeRaw`ALTER SEQUENCE "PlanningEspace_id_seq" RESTART WITH 1`
+    await prisma.$executeRaw`ALTER SEQUENCE "EspaceJeu_id_seq" RESTART WITH 1`
 
     //// associations ////
 
@@ -455,6 +458,119 @@ async function main() {
         },
     })
     console.log({ planningEspace5 })
+
+    //// jeux ////
+
+    const jeu1 = await prisma.jeu.upsert({
+        where: { idJeu: 1 },
+        update: {},
+        create: {
+            idJeu: 1,
+            nom: 'Jeu 1',
+            auteur: 'Auteur 1',
+            editeur: 'Editeur 1',
+            nbJoueurs: '2-4',
+            ageMin: '8',
+            duree: '30',
+            type: 'Type 1',
+            notice: 'Notice 1',
+            mecanismes: 'Mecanismes 1',
+            themes: 'Themes 1',
+            tags: 'Tags 1',
+            description: 'Description 1',
+            image: 'Image 1',
+            logo: 'Logo 1',
+            video: 'Video 1',
+        },
+    })
+    console.log({ jeu1 })
+
+    const jeu2 = await prisma.jeu.upsert({
+        where: { idJeu: 2 },
+        update: {},
+        create: {
+            idJeu: 2,
+            nom: 'Jeu 2',
+            auteur: 'Auteur 2',
+            editeur: 'Editeur 2',
+            nbJoueurs: '2-4',
+            ageMin: '8',
+            duree: '30',
+            type: 'Type 2',
+            notice: 'Notice 2',
+            mecanismes: 'Mecanismes 2',
+            themes: 'Themes 2',
+            tags: 'Tags 2',
+            description: 'Description 2',
+            image: 'Image 2',
+            logo: 'Logo 2',
+            video: 'Video 2',
+        },
+    })
+    console.log({ jeu2 })
+
+    const jeu3 = await prisma.jeu.upsert({
+        where: { idJeu: 3 },
+        update: {},
+        create: {
+            idJeu: 3,
+            nom: 'Jeu 3',
+            auteur: 'Auteur 3',
+            editeur: 'Editeur 3',
+            nbJoueurs: '2-4',
+            ageMin: '8',
+            duree: '30',
+            type: 'Type 3',
+            notice: 'Notice 3',
+            mecanismes: 'Mecanismes 3',
+            themes: 'Themes 3',
+            tags: 'Tags 3',
+            description: 'Description 3',
+            image: 'Image',
+            logo: 'Logo 3',
+            video: 'Video 3',
+        }
+    })
+    console.log({ jeu3 })
+
+    //// espaces jeux ////
+
+    const espaceJeu1 = await prisma.espaceJeu.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            jeuId: jeu1.idJeu,
+            espaceId: espace3.id,
+            aAnimer: 'oui',
+            recu: 'oui',
+        },
+    })
+    console.log({ espaceJeu1 })
+
+    const espaceJeu2 = await prisma.espaceJeu.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            jeuId: jeu2.idJeu,
+            espaceId: espace3.id,
+            aAnimer: 'oui',
+            recu: 'non',
+        },
+    })
+    console.log({ espaceJeu2 })
+
+    const espaceJeu3 = await prisma.espaceJeu.upsert({
+        where: { id: 3 },
+        update: {},
+        create: {
+            jeuId: jeu3.idJeu,
+            espaceId: espace4.id,
+            aAnimer: 'non',
+            recu: 'oui',
+        },
+    })
+    console.log({ espaceJeu3 })
+
 }
 
 main()
